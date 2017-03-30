@@ -31,7 +31,7 @@ public class MOUSEINPUT extends WinUser.MOUSEINPUT implements Externalizable {
         time = new WinDef.DWORD(in.readLong());
         dwExtraInfo = new BaseTSD.ULONG_PTR(in.readLong());
         dx = new WinDef.LONG(in.readLong());
-        dy = new WinDef.LONG(in.read());
+        dy = new WinDef.LONG(in.readLong());
         mouseData = new WinDef.DWORD(in.readLong());
         dwFlags = new WinDef.DWORD(in.readLong());
     }

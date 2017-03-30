@@ -10,14 +10,14 @@
 
     <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="append" value="false"/>
-        <param name="file" value=".\logs\app-log"/>
+        <param name="file" value=".\\logs\\app.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %C:%L - %m%n"/>
         </layout>
     </appender>
 
     <root>
-        <level value="DEBUG"/>
+        <level value="TRACE"/>
         <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </root>

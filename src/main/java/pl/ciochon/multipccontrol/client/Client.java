@@ -38,6 +38,7 @@ public class Client {
                     logger.info("Client started");
                     while (true) {
                         MOUSEINPUT mouseinput = mouseInputQueue.take();
+                        logger.trace(mouseinput);
                         oos.writeObject(mouseinput);
                         oos.flush();
                     }

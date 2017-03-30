@@ -20,6 +20,8 @@ public class InOutAdapter {
         mouserocwparamToDw_flag_enum.put(LowLevelMouseProc.MOUSEPROCWPARAM.ENUM.WM_LBUTTONDOWN, MOUSEINPUT.DW_FLAG_ENUM.MOUSEEVENTF_LEFTDOWN);
         mouserocwparamToDw_flag_enum.put(LowLevelMouseProc.MOUSEPROCWPARAM.ENUM.WM_LBUTTONUP, MOUSEINPUT.DW_FLAG_ENUM.MOUSEEVENTF_LEFTUP);
         mouserocwparamToDw_flag_enum.put(LowLevelMouseProc.MOUSEPROCWPARAM.ENUM.WM_MOUSEMOVE, MOUSEINPUT.DW_FLAG_ENUM._MOUSEVENTF_ABSOLUTE_MOVE);
+        mouserocwparamToDw_flag_enum.put(LowLevelMouseProc.MOUSEPROCWPARAM.ENUM.WM_RBUTTONDOWN, MOUSEINPUT.DW_FLAG_ENUM.MOUSEEVENTF_RIGHTDOWN);
+        mouserocwparamToDw_flag_enum.put(LowLevelMouseProc.MOUSEPROCWPARAM.ENUM.WM_RBUTTONUP, MOUSEINPUT.DW_FLAG_ENUM.MOUSEEVENTF_RIGHTUP);
     }
 
     public static MOUSEINPUT adapt(LowLevelMouseProc.MOUSEPROCWPARAM wparam, LowLevelMouseProc.MSLLHOOKSTRUCT lparam) {
