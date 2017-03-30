@@ -1,4 +1,4 @@
-package pl.ciochon.multikeyboard.host.mouse.hook;
+package pl.ciochon.multipccontrol.mouse.hook.nativeapi;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
@@ -21,23 +21,23 @@ public interface LowLevelMouseProc extends WinUser.HOOKPROC {
 
     WinDef.LRESULT callback(int nCode, MOUSEPROCWPARAM wParam, MSLLHOOKSTRUCT lParam);
 
-    class MOUSEPROCWPARAM extends WinDef.WPARAM{
+    class MOUSEPROCWPARAM extends WinDef.WPARAM {
 
-        public ENUM getValue(){
+        public ENUM getValue() {
             return ENUM.fromValue(this.longValue());
         }
 
         public enum ENUM {
-            WM_LBUTTONDOWN(0x0201),WM_LBUTTONUP(0x0202),WM_MOUSEMOVE(0x0200),WM_MOUSEWHEEL(0x020A),WM_MOUSEHWHEEL(0x020E),WM_RBUTTONDOWN(0x0204),WM_RBUTTONUP(0x0205);
+            WM_LBUTTONDOWN(0x0201), WM_LBUTTONUP(0x0202), WM_MOUSEMOVE(0x0200), WM_MOUSEWHEEL(0x020A), WM_MOUSEHWHEEL(0x020E), WM_RBUTTONDOWN(0x0204), WM_RBUTTONUP(0x0205);
             private long value;
 
-            ENUM(long value){
+            ENUM(long value) {
                 this.value = value;
             }
 
-            public static ENUM fromValue(long value){
-                for(ENUM en : ENUM.values()){
-                    if(en.value == value){
+            public static ENUM fromValue(long value) {
+                for (ENUM en : ENUM.values()) {
+                    if (en.value == value) {
                         return en;
                     }
                 }
@@ -60,8 +60,8 @@ public interface LowLevelMouseProc extends WinUser.HOOKPROC {
 
         @Override
         protected List<String> getFieldOrder() {
-            return Arrays.asList(new String[] { "pt", "mouseData", "flags",
-                    "time", "dwExtraInfo" });
+            return Arrays.asList(new String[]{"pt", "mouseData", "flags",
+                    "time", "dwExtraInfo"});
         }
     }
 

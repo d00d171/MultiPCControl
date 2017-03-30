@@ -1,8 +1,8 @@
-package pl.ciochon.multikeyboard.host.client;
+package pl.ciochon.multipccontrol.client;
 
-import pl.ciochon.multikeyboard.host.mouse.generator.MOUSEINPUT;
-import pl.ciochon.multikeyboard.host.mouse.generator.MouseInputSerializable;
-import pl.ciochon.multikeyboard.host.mouse.hook.MouseHook;
+import org.apache.log4j.Logger;
+import pl.ciochon.multipccontrol.mouse.generator.nativeapi.MOUSEINPUT;
+import pl.ciochon.multipccontrol.mouse.hook.MouseHook;
 
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -12,6 +12,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by Konrad Ciochoń on 2017-03-28.
  */
 public class Client {
+
+    private static Logger logger = Logger.getLogger(Client.class);
 
     private String host;
 
@@ -33,15 +35,15 @@ public class Client {
                     Socket sock = new Socket(host, port);
                     ObjectOutputStream oos = new ObjectOutputStream(sock.getOutputStream());
 
-                    System.out.println("Client started");
+                    logger.info("Client started");
                     while (true) {
                         MOUSEINPUT mouseinput = mouseInputQueue.take();
-                        oos.writeObject(new MouseInputSerializable(mouseinput));
+                        oos.writeObject(mouseinput);
                         oos.flush();
                     }
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    logger.error("Client error", e);
                 }
             }
         };

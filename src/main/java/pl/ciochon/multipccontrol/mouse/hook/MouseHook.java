@@ -1,12 +1,14 @@
-package pl.ciochon.multikeyboard.host.mouse.hook;
+package pl.ciochon.multipccontrol.mouse.hook;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.WinUser;
-import pl.ciochon.multikeyboard.host.mouse.generator.MOUSEINPUT;
-import pl.ciochon.multikeyboard.host.mouse.util.InOutAdapter;
+import org.apache.log4j.Logger;
+import pl.ciochon.multipccontrol.mouse.generator.nativeapi.MOUSEINPUT;
+import pl.ciochon.multipccontrol.mouse.hook.nativeapi.LowLevelMouseProc;
+import pl.ciochon.multipccontrol.mouse.util.InOutAdapter;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -16,9 +18,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 //https://msdn.microsoft.com/en-us/library/windows/desktop/ms644986(v=vs.85).aspx
 public class MouseHook {
 
+    private static Logger logger = Logger.getLogger(MouseHook.class);
+
     private LinkedBlockingQueue<MOUSEINPUT> mouseInputQueue;
+
+    //TODO setting quit
     private static volatile boolean quit;
-    private static LowLevelMouseProc mouseHook;
+
     private static WinUser.HHOOK hhk;
 
     public MouseHook(LinkedBlockingQueue<MOUSEINPUT> mouseInputQueue) {
@@ -29,7 +35,7 @@ public class MouseHook {
         final User32 lib = User32.INSTANCE;
         WinDef.HMODULE hMod = Kernel32.INSTANCE.GetModuleHandle(null);
 
-        mouseHook = new LowLevelMouseProc() {
+        LowLevelMouseProc mouseHook = new LowLevelMouseProc() {
             public WinDef.LRESULT callback(int nCode, MOUSEPROCWPARAM wParam, MSLLHOOKSTRUCT info) {
 
                 if (nCode >= 0) {
@@ -58,7 +64,7 @@ public class MouseHook {
 
         hhk = lib.SetWindowsHookEx(WinUser.WH_MOUSE_LL, mouseHook, hMod, 0);
 
-        System.out.println("Mouse hook installed");
+        logger.info("Mouse hook installed");
         new Thread() {
             @Override
             public void run() {
@@ -68,7 +74,7 @@ public class MouseHook {
                     } catch (Exception e) {
                     }
                 }
-                System.err.println("unhook and exit");
+                logger.error("Error occured in mouse hook. Unhook and exit.");
                 lib.UnhookWindowsHookEx(hhk);
                 System.exit(0);
             }
@@ -79,10 +85,10 @@ public class MouseHook {
         WinUser.MSG msg = new WinUser.MSG();
         while ((result = lib.GetMessage(msg, null, 0, 0)) != 0) {
             if (result == -1) {
-                System.err.println("error in get message");
+                logger.error("Error in get message");
                 break;
             } else {
-                System.err.println("got message");
+                logger.info("Got message");
                 lib.TranslateMessage(msg);
                 lib.DispatchMessage(msg);
             }

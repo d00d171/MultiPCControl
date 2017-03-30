@@ -1,8 +1,8 @@
-package pl.ciochon.multikeyboard.host.server;
+package pl.ciochon.multipccontrol.server;
 
-import pl.ciochon.multikeyboard.host.mouse.generator.MOUSEINPUT;
-import pl.ciochon.multikeyboard.host.mouse.generator.MouseEventGenerator;
-import pl.ciochon.multikeyboard.host.mouse.generator.MouseInputSerializable;
+import org.apache.log4j.Logger;
+import pl.ciochon.multipccontrol.mouse.generator.MouseEventGenerator;
+import pl.ciochon.multipccontrol.mouse.generator.nativeapi.MOUSEINPUT;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,6 +14,8 @@ import java.net.Socket;
  */
 public class Server {
     private int port;
+
+    private static Logger logger = Logger.getLogger(Server.class);
 
     public Server(int port) {
         this.port = port;
@@ -29,14 +31,14 @@ public class Server {
 
                     ObjectInputStream ois = new ObjectInputStream(sock.getInputStream());
 
-                    System.out.println("Server started");
+                    logger.info("Server started");
                     while (true) {
-                        MOUSEINPUT mouseinput = ((MouseInputSerializable) ois.readObject()).toMOUSEINPUT();
+                        MOUSEINPUT mouseinput = (MOUSEINPUT) ois.readObject();
                         System.out.println(mouseinput.toString());
                         MouseEventGenerator.generateEvent(mouseinput);
                     }
                 } catch (Exception e) {
-                    System.out.println(e);
+                    logger.error("Server error occured: ", e);
                 }
             }
         };

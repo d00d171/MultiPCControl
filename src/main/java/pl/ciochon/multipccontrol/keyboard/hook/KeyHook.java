@@ -1,4 +1,4 @@
-package pl.ciochon.multikeyboard.host.keyboard.hook;
+package pl.ciochon.multipccontrol.keyboard.hook;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
@@ -22,7 +22,7 @@ public class KeyHook {
         keyboardHook = new WinUser.LowLevelKeyboardProc() {
             public WinDef.LRESULT callback(int nCode, WinDef.WPARAM wParam, WinUser.KBDLLHOOKSTRUCT info) {
                 if (nCode >= 0) {
-                    switch(wParam.intValue()) {
+                    switch (wParam.intValue()) {
                         case WinUser.WM_KEYDOWN:
                         case WinUser.WM_SYSKEYDOWN:
                         case WinUser.WM_KEYUP:
@@ -50,7 +50,10 @@ public class KeyHook {
             @Override
             public void run() {
                 while (!quit) {
-                    try { Thread.sleep(10); } catch(Exception e) { }
+                    try {
+                        Thread.sleep(10);
+                    } catch (Exception e) {
+                    }
                 }
                 System.err.println("unhook and exit");
                 lib.UnhookWindowsHookEx(hhk);
@@ -65,8 +68,7 @@ public class KeyHook {
             if (result == -1) {
                 System.err.println("error in get message");
                 break;
-            }
-            else {
+            } else {
                 System.err.println("got message");
                 lib.TranslateMessage(msg);
                 lib.DispatchMessage(msg);

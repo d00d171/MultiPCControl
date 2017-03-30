@@ -1,14 +1,14 @@
-package pl.ciochon.multikeyboard.host;
+package pl.ciochon.multipccontrol;
 
-import pl.ciochon.multikeyboard.host.client.Client;
-import pl.ciochon.multikeyboard.host.server.Server;
+import pl.ciochon.multipccontrol.client.Client;
+import pl.ciochon.multipccontrol.server.Server;
 
 import java.io.IOException;
 
 /**
  * Created by Konrad Ciochoń on 2017-03-27.
  */
-public class Host {
+public class AppRunner {
 
     private static void incorrectUsage() {
         System.out.println("Usage : [CLIENT {SERVER_HOST} {SERVER_PORT}] || [SERVER {LISTEN_PORT}]");
@@ -36,12 +36,6 @@ public class Host {
                 incorrectUsage();
             }
         }
-
-        //new MouseEventGenerator().start();
-        //new KeyboardEventGenerator().start();
-        //new KeyHook().start();
-        //new MouseHook().start();
-        //new KeyboardEventGenerator().start();
     }
 
 }

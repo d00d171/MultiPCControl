@@ -1,4 +1,4 @@
-package pl.ciochon.multikeyboard.host.keyboard.generator;
+package pl.ciochon.multipccontrol.keyboard.generator;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
@@ -11,7 +11,7 @@ public class KeyboardEventGenerator {
 
     //https://msdn.microsoft.com/en-us/library/windows/desktop/ms646271(v=vs.85).aspx
 
-    public void start(){
+    public void start() {
         final User32 lib = User32.INSTANCE;
 
         WinUser.INPUT input = new WinUser.INPUT();
@@ -21,7 +21,7 @@ public class KeyboardEventGenerator {
         input.input.ki.wVk = new WinDef.WORD(0x52);
         input.input.ki.time = new WinDef.DWORD(0);
 
-        lib.SendInput(new WinDef.DWORD(1),  (WinUser.INPUT[] ) input.toArray( 1 ), input.size() );
+        lib.SendInput(new WinDef.DWORD(1), (WinUser.INPUT[]) input.toArray(1), input.size());
     }
 
 }
