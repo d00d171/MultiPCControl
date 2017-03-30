@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pl.ciochon</groupId>
-    <artifactId>multi-keyboard</artifactId>
+    <artifactId>multi-pc-control</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
